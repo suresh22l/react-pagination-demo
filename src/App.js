@@ -9,7 +9,26 @@ import { useEffect, useState } from "react"
 
 export default function TableUnstyled() {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [nameSort, setNameSort] = React.useState('name,asc');
+  const [ageSort, setAgeSort] = React.useState('age,asc');
+  const [citySort, setCitySort] = React.useState('address2,asc');
+  const [sort, setSort] = React.useState('name,asc');
+  const [filterText, setFilterText] = useState("");
+  const [filterText1, setFilterText1] = useState("");
+  const [filterText2, setFilterText2] = useState("");
+
+  useEffect(() => {
+  	setFilterText('&name='+filterText1+'&age='+filterText2);
+  }, [filterText1,filterText2]);
+  
+  const handleFilterText1 = (event) => {
+  	setFilterText('name='+event.target.value);
+  }
+
+  const handleFilterText2 = (event) => {
+  	setFilterText('age='+event.target.value);
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -21,15 +40,32 @@ export default function TableUnstyled() {
     setPage(0);
   };
 
-  const [loading, setLoading] = useState(false)
-  const [players, setPlayers] = useState([])
-  const [totalCount, setTotalCount] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [emptyRows, setEmptyRows] = useState(0);
+  const handleNameSort = (event) => {
+    nameSort.includes('name,asc') ? setNameSort('name,desc') : setNameSort('name,asc');
+    setSort(nameSort);
+  };
+  
+  const handleAgeSort = (event) => {
+  	ageSort.includes('asc') ? setAgeSort('age,desc') : setAgeSort('age,asc'); 
+    setSort(ageSort);
+  };
+
+  const handleCitySort = (event) => {
+    citySort.includes('asc') ? setCitySort('address2,desc') : setCitySort('address2,asc');
+    setSort(citySort);
+  };
+  
+  const [loading, setLoading] = React.useState(false)
+  const [players, setPlayers] = React.useState([])
+  const [totalCount, setTotalCount] = React.useState(0);
+  const [totalPages, setTotalPages] = React.useState(0);
+  const [emptyRows, setEmptyRows] = React.useState(0);
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:8080/players/list?size=' + rowsPerPage + '&page=' + page,{
+    fetch('http://localhost:8080/players/list?size=' 
+    + rowsPerPage + '&page=' + page+ '&sort=' + sort
+    + filterText,{
     method: "GET",
     headers: {
       "Access-Control-Allow-Origin" : "*",
@@ -45,17 +81,43 @@ export default function TableUnstyled() {
                      console.log('Page:' + page + 'rowsPerPage:' + rowsPerPage)
                      setLoading(false)})
       .catch(error => console.error(error));
-  }, [rowsPerPage,page]);
+  }, [rowsPerPage,page,sort,filterText]);
   
   return (
     <Root sx={{ maxWidth: '100%', width: 500 }}>
       <table aria-label="custom pagination table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Age</th>
+            <th>
+	            <button type="button" onClick={handleNameSort}>
+	              Name
+	            </button>
+		        <input
+		          value={filterText1}
+		          onChange={(e) => {
+		            setFilterText1(e.target.value);
+		          }}
+		          type="text"
+		        />
+			</th>
+            <th>
+	            <button type="button" onClick={handleAgeSort}>
+	              Age
+	            </button>
+		        <input
+		          value={filterText2}
+		          onChange={(e) => {
+		            setFilterText2(e.target.value);
+		          }}
+		          type="text"
+		        />
+			</th>
             <th>Address</th>
-            <th>City</th>
+            <th>
+	            <button type="button" onClick={handleCitySort}>
+	              City
+	            </button>
+			</th>
           </tr>
         </thead>
         <tbody>
@@ -82,7 +144,7 @@ export default function TableUnstyled() {
         <tfoot>
           <tr>
             <CustomTablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: totalCount }]}
+              rowsPerPageOptions={[10, 100, 1000, { label: 'All', value: totalCount }]}
               colSpan={4}
               count={totalCount}
               rowsPerPage={rowsPerPage}
@@ -105,26 +167,6 @@ export default function TableUnstyled() {
     </Root>
   );
 }
-
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
-
-const rows = [
-  createData('Cupcake', 305, 3.7),
-  createData('Donut', 452, 25.0),
-  createData('Eclair', 262, 16.0),
-  createData('Frozen yoghurt', 159, 6.0),
-  createData('Gingerbread', 356, 16.0),
-  createData('Honeycomb', 408, 3.2),
-  createData('Ice cream sandwich', 237, 9.0),
-  createData('Jelly Bean', 375, 0.0),
-  createData('KitKat', 518, 26.0),
-  createData('Lollipop', 392, 0.2),
-  createData('Marshmallow', 318, 0),
-  createData('Nougat', 360, 19.0),
-  createData('Oreo', 437, 18.0),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
 
 const grey = {
   50: '#F3F6F9',
