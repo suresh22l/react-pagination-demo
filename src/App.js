@@ -63,7 +63,7 @@ export default function TableUnstyled() {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:8080/players/list?size=' 
+    fetch(process.env.REACT_APP_BCKEND_API_URL+'/players/list?size='
     + rowsPerPage + '&page=' + page+ '&sort=' + sort
     + filterText,{
     method: "GET",
