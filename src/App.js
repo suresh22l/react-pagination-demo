@@ -63,6 +63,9 @@ export default function TableUnstyled() {
 
   useEffect(() => {
     setLoading(true);
+    console.log(process.env.REACT_APP_BCKEND_API_URL+'/players/list?size='
+    + rowsPerPage + '&page=' + page+ '&sort=' + sort
+    + filterText);
     fetch(process.env.REACT_APP_BCKEND_API_URL+'/players/list?size='
     + rowsPerPage + '&page=' + page+ '&sort=' + sort
     + filterText,{
