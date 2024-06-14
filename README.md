@@ -2,6 +2,17 @@
 
 Simple frontend to view the player info served from <a href="https://github.com/suresh22l/backend-playerapp/" target="_blank">PlayerApp</a>. 
 
+## Architecture
+<p align="center">
+  <img src="https://github.com/suresh22l/backend-playerapp/assets/39839103/4afbb014-a93b-4c63-b3cc-2fd7f18191d5" />
+</p>
+
+
+## Frontend React App
+<p align="center">
+  <img width="403" alt="image" src="https://github.com/suresh22l/react-pagination-demo/assets/39839103/eea0f83d-8e5f-48ca-9562-e75bbb89c8df" />
+</p>
+
 ## Launch App locally
 
 Follow the below steps to clone the project from the github repository and install it or you could deploy them using helm charts (steps provided below).
@@ -55,11 +66,4 @@ http://<SERVICE_IP>:<SERVICE_PORT>/
 ```
 kubectl describe svc backend-playerapp
 ```
-
-#### Output
-<img width="403" alt="image" src="https://github.com/suresh22l/react-pagination-demo/assets/39839103/eea0f83d-8e5f-48ca-9562-e75bbb89c8df">
-
-
-## Architecture
-![Untitled Diagram drawio (3)](https://github.com/suresh22l/backend-playerapp/assets/39839103/4afbb014-a93b-4c63-b3cc-2fd7f18191d5)
 
