@@ -8,7 +8,7 @@ backend_api_url: http://backend-playerapp:8080
 wds_socket_port: 0
 
 image:
-  repository: react-pagination-app
+  repository: suresh22l/frontend-react-pagination
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
