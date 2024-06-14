@@ -20,6 +20,7 @@ export default function TableUnstyled() {
 
   useEffect(() => {
   	setFilterText('&name='+filterText1+'&age='+filterText2);
+  	setPage(0);
   }, [filterText1,filterText2]);
   
   const handleFilterText1 = (event) => {
